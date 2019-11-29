@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Task {
     public static void main(String[] args) {
@@ -12,9 +11,19 @@ public class Task {
             System.out.println("Считываем данные из второго файла...");
             List<TwoComponents> secondList = readData(args[1]);
             System.out.println("Выведем данные второго списка...\n" + secondList.toString());
-            List<ThreeComponents> resultList = Join.joinLists(firstList, secondList);
 
-            System.out.println("Выведем данные результирующего списка списка...\n" + resultList.toString());
+            ArrayList<ThreeComponents> resultArrayList = Join.joinToArrayList(firstList, secondList);
+            System.out.println("Выведем данные результирующего ArrayList...");
+            Printer.printList(resultArrayList);
+
+            LinkedList<ThreeComponents> resultSortedLinkedList = Join.joinToSortedLinkedList(firstList, secondList);
+            System.out.println("Выведем данные результирующего отсортированного LinkedList...");
+            Printer.printList(resultSortedLinkedList);
+
+            Map<Integer, ThreeComponents> resultMap = Join.joinToMap(firstList, secondList);
+            System.out.println("Выведем данные результирующего HashMap...");
+            Printer.printMap(resultMap);
+
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Ошибка! Файл не был передан в качестве аргумента. Программа не может быть выполнена.");
             e.printStackTrace();
@@ -31,7 +40,7 @@ public class Task {
                 numberOfString++;
                 s = reader.readLine().trim();
                 mas = s.split(" ");
-                if (!TwoComponents.checkDataForTwoComponentsObject(mas)) {
+                if (!TwoComponents.isDataForTwoComponentsObjectRight(mas)) {
                     System.out.println("Чтение данных на строке " + numberOfString + " не было выполнено.");
                     continue;
                 }

@@ -1,16 +1,28 @@
 public class ThreeComponents {
     private int id;
     private String firstData;
-    private String secondDate;
+    private String secondData;
 
-    public ThreeComponents(int id, String firstData, String secondDate) {
+    public ThreeComponents(int id, String firstData, String secondData) {
         this.id = id;
         this.firstData = firstData;
-        this.secondDate = secondDate;
+        this.secondData = secondData;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstData() {
+        return firstData;
+    }
+
+    public String getSecondData() {
+        return secondData;
     }
 
     @Override
     public String toString() {
-        return id + "   " + firstData + "   " + secondDate + "\n";
+        return getId() + "   " + getFirstData() + "   " + getSecondData() + "\n";
     }
 }
