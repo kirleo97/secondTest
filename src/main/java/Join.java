@@ -50,12 +50,13 @@ public class Join {
 
     public static void findAndAddEqualDataFromHashMap(HashMap<Integer, List<String>> firstMap, HashMap<Integer, List<String>> secondMap, List<ThreeComponents> resultList) {
         for (int firstId : firstMap.keySet()) {
-            for (int secondId : secondMap.keySet()) {
-                if (firstId == secondId) {
-                    for (String firstData : firstMap.get(firstId)) {
-                        for (String secondData : secondMap.get(secondId))
-                            resultList.add(new ThreeComponents(firstId, firstData, secondData));
-                    }
+            List<String> list = secondMap.get(firstId);
+            if (list == null) {
+                continue;
+            } else {
+                for (String firstData : firstMap.get(firstId)) {
+                    for (String secondData : secondMap.get(firstId))
+                        resultList.add(new ThreeComponents(firstId, firstData, secondData));
                 }
             }
         }

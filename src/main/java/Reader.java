@@ -8,7 +8,8 @@ public class Reader {
     public static void readFileAndAddDataToCollections(String fileName, boolean isItFirstFile) {
         if (isItFirstFile)
             System.out.println("Начинаем считывать данные из первого файла...");
-        else System.out.println("Начинаем считывать данные из второго файла...");
+        else
+            System.out.println("Начинаем считывать данные из второго файла...");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String s;
