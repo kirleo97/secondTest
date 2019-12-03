@@ -11,40 +11,52 @@ public class Join {
     }
 
     public static void findAndAddEqualDataFromSortedLinkedLists(LinkedList<TwoComponents> firstList, LinkedList<TwoComponents> secondList, List<ThreeComponents> resultList) {
-        for (int i  = 0, j = 0; i < firstList.size();) {
-            if (firstList.get(i).equals(secondList.get(j))) {
-                resultList.add(new ThreeComponents(firstList.get(i).getId(), firstList.get(i).getData(), secondList.get(j).getData()));
-                if (j == secondList.size() - 1) {
-                    j = 0;
-                    i++;
-                    continue;
-                }
-                j++;
-                continue;
-            } else {
-                if (firstList.get(i).getId() < secondList.get(j).getId()) {
-                    if (j == secondList.size() - 1) {
-                        i++;
+        Iterator<TwoComponents> firstIterator = firstList.iterator();
+        Iterator<TwoComponents> secondIterator = secondList.iterator();
+        if (firstIterator.hasNext() && secondIterator.hasNext()) {
+            TwoComponents firstCurrent = firstIterator.next();
+            TwoComponents secondCurrent = secondIterator.next();
+            do {
+                if (firstCurrent.equals(secondCurrent)) {
+                    resultList.add(new ThreeComponents(firstCurrent.getId(), firstCurrent.getData(), secondCurrent.getData()));
+                    if (!secondIterator.hasNext()) {
+                        secondIterator = secondList.iterator();
+                        secondCurrent = secondIterator.next();
+                        firstCurrent = firstIterator.next();
                         continue;
                     }
-                    i++;
-                    j = 0;
+                    secondCurrent = secondIterator.next();
                     continue;
                 } else {
-                    if (j == secondList.size() - 1) {
-                        break;
+                    if (firstCurrent.getId() < secondCurrent.getId()) {
+                        if (!secondIterator.hasNext()) {
+                            firstCurrent = firstIterator.next();
+                            continue;
+                        }
+                        firstCurrent = firstIterator.next();
+                        secondIterator = secondList.iterator();
+                        secondCurrent = secondIterator.next();
+                        continue;
+                    } else {
+                        if (!secondIterator.hasNext()) {
+                            break;
+                        }
+                        secondCurrent = secondIterator.next();
                     }
-                    j++;
                 }
-            }
+            } while (firstIterator.hasNext());
         }
     }
 
-    public static void findAndAddEqualDataFromHashMap(HashMap<Integer, TwoComponents> firstMap, HashMap<Integer, TwoComponents> secondMap, List<ThreeComponents> resultList) {
-        for (TwoComponents firstTwoComponent : firstMap.values()) {
-            for (TwoComponents secondTwoComponent : secondMap.values()) {
-                if (firstTwoComponent.equals(secondTwoComponent))
-                    resultList.add(new ThreeComponents(firstTwoComponent.getId(), firstTwoComponent.getData(), secondTwoComponent.getData()));
+    public static void findAndAddEqualDataFromHashMap(HashMap<Integer, List<String>> firstMap, HashMap<Integer, List<String>> secondMap, List<ThreeComponents> resultList) {
+        for (int firstId : firstMap.keySet()) {
+            for (int secondId : secondMap.keySet()) {
+                if (firstId == secondId) {
+                    for (String firstData : firstMap.get(firstId)) {
+                        for (String secondData : secondMap.get(secondId))
+                            resultList.add(new ThreeComponents(firstId, firstData, secondData));
+                    }
+                }
             }
         }
     }

@@ -7,8 +7,8 @@ public class Collections {
     private static LinkedList<TwoComponents> firstSortedLinkedList = new LinkedList<>();
     private static LinkedList<TwoComponents> secondSortedLinkedList = new LinkedList<>();
 
-    private static HashMap<Integer, TwoComponents> firstHashMap = new HashMap<>();
-    private static HashMap<Integer, TwoComponents> secondHashMap = new HashMap<>();
+    private static HashMap<Integer, List<String>> firstHashMap = new HashMap<>();
+    private static HashMap<Integer, List<String>> secondHashMap = new HashMap<>();
 
     public static ArrayList<TwoComponents> getFirstArrayList() {
         return firstArrayList;
@@ -26,25 +26,31 @@ public class Collections {
         return secondSortedLinkedList;
     }
 
-    public static HashMap<Integer, TwoComponents> getFirstHashMap() {
+    public static HashMap<Integer, List<String>> getFirstHashMap() {
         return firstHashMap;
     }
 
-    public static HashMap<Integer, TwoComponents> getSecondHashMap() {
-        return secondHashMap;
-    }
+    public static HashMap<Integer, List<String>> getSecondHashMap() { return secondHashMap; }
 
-    public static void addDataToFirstCollections(TwoComponents twoComponents, int number) {
+    public static void addDataToFirstCollections(TwoComponents twoComponents) {
         getFirstArrayList().add(twoComponents);
         getFirstSortedLinkedList().add(twoComponents);
-        getFirstSortedLinkedList().sort(Comparator.comparing(TwoComponents::getId).thenComparing(TwoComponents::getData));
-        getFirstHashMap().put(number, twoComponents);
+        putToHashMap(getFirstHashMap(), twoComponents);
     }
 
-    public static void addDataToSecondCollections(TwoComponents twoComponents, int number) {
+    public static void addDataToSecondCollections(TwoComponents twoComponents) {
         getSecondArrayList().add(twoComponents);
         getSecondSortedLinkedList().add(twoComponents);
-        getSecondSortedLinkedList().sort(Comparator.comparing(TwoComponents::getId).thenComparing(TwoComponents::getData));
-        getSecondHashMap().put(number, twoComponents);
+        putToHashMap(getSecondHashMap(), twoComponents);
+    }
+
+    public static void putToHashMap(HashMap<Integer, List<String>> map, TwoComponents twoComponents) {
+        if (map.containsKey(twoComponents.getId())) {
+            map.get(twoComponents.getId()).add(twoComponents.getData());
+        } else {
+            List<String> list = new ArrayList<>();
+            list.add(twoComponents.getData());
+            map.put(twoComponents.getId(), list);
+        }
     }
 }
